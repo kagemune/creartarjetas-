@@ -1,0 +1,5 @@
+./venv/
+.venv/
+.output_empleados/
+.html2image_temp/
+.tarjetas/
