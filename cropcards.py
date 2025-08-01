@@ -27,8 +27,8 @@ def procesar_imagen(ruta_entrada, ruta_salida):
         print(f"Error: {str(e)}")
 
 #declarar directorios de entrada y salida
-dirEntrada = "./output_empleados"
-dirSalida  = "./resultados/procesado/"
+dirEntrada = "./tarjetas/"
+dirSalida  = "./resultados/"
 
 for img in os.listdir(dirEntrada):
     if img.endswith(".jpg") or img.endswith(".png"):

@@ -2,14 +2,14 @@ import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 from html2image import Html2Image
 
-import cropcards
+
 
 # from weasyprint import HTML
 import os
 # 1. Crear rutas absolutas y normalizadas
 base_dir = os.path.dirname(os.path.abspath(__file__))  # Ruta del script
 temp_dir = os.path.normpath(os.path.join(base_dir, "html2image_temp"))
-output_dir = os.path.normpath(os.path.join(base_dir, "output_empleados"))
+output_dir = os.path.normpath(os.path.join(base_dir, "tarjetas"))
 
 # 2. Crear directorios con permisos adecuados
 os.makedirs(temp_dir, exist_ok=True, mode=0o777)
@@ -38,7 +38,7 @@ hti = Html2Image(
      ]
 )
 # Configuración
-csv_path = 'Asistencia y Novedades V3 - Personal.csv'
+csv_path = 'asistencia.csv'
 template_path = 'tarjetasEmpleados1.html'
 output_folder = './tarjetas/'
 os.makedirs(output_folder, exist_ok=True)
@@ -88,5 +88,6 @@ for _, empleado in df.iterrows():
         print(f"✗ Falló generación para empleado {empleado['Cédula']}")
 
 # Finalizar
-cropcards() 
+import cropcards
+cropcards
 print("Proceso completado!")
