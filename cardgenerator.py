@@ -2,6 +2,8 @@ import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 from html2image import Html2Image
 
+import cropcards
+
 # from weasyprint import HTML
 import os
 # 1. Crear rutas absolutas y normalizadas
@@ -86,6 +88,5 @@ for _, empleado in df.iterrows():
         print(f"✗ Falló generación para empleado {empleado['Cédula']}")
 
 # Finalizar
-hti.close()  # Cerrar Html2Image para liberar recursos
-
+cropcards() 
 print("Proceso completado!")
