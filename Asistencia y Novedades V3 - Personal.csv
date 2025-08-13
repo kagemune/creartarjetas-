@@ -1,10 +1,4 @@
 Cédula,Apellidos,Nombres,Celular,Área,CentroDeCostos,Sede,CódigoQR,Estado,JefeÁrea,Supervisor,Empresa
-80088999,Esguerra,Juan Camilo,573153375981,Poscosecha,Labores 1,Soacha,https://quickchart.io/qr?text=80088999&size=200,Activo,jefedearea1@turflor.com,supervisor1@turflor.com,
-1234,Contreras,Clara,573164605708,Producción,Labores 2,Mosquera,https://quickchart.io/qr?text=1234&size=200,Activo,jefedearea2@turflor.com,Supervisor2@turflor.com,
-5678,Perez,Paulo,573153375981,Poscosecha,Labores 3,Soacha,https://quickchart.io/qr?text=5678&size=200,Activo,jefedearea1@turflor.com,supervisor1@turflor.com,
-91011,Machado,Jose,573164605708,Propagación,Labores 4,Mosquera,https://quickchart.io/qr?text=91011&size=200,Inactivo,jefedearea2@turflor.com,Supervisor2@turflor.com,
-7777,Bernal,Santiago,573153375981,Logística 1,Fumigación,Soacha,https://quickchart.io/qr?text=7777&size=200,Activo,jefedearea1@turflor.com,supervisor1@turflor.com,
-52794484,Santiago,Paola,573164605708,Producción,Riego,Mosquera,https://quickchart.io/qr?text=52794484&size=200,Activo,jefedearea2@turflor.com,Supervisor2@turflor.com,
 51963639,Acevedo Ayala,Leonor,573213858839,Poscosecha,Poscosecha,Soacha,https://quickchart.io/qr?text=51963639&size=200,Activo,ruben.ramirez@turflor.com,,Turflor
 18777941,Acosta Moreno ,Yerry Jose ,573027090970,Produccion,Labores Culturales 6,Soacha,https://quickchart.io/qr?text=18777941&size=200,Activo,andres.torres@turflor.com,,Turflor
 1000129756,Acosta Prieto ,Jessica Paola ,573203801976,Poscosecha,Poscosecha,Soacha,https://quickchart.io/qr?text=1000129756&size=200,Activo,ruben.ramirez@turflor.com,,Turflor
