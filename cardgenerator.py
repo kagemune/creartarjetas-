@@ -38,7 +38,7 @@ hti = Html2Image(
      ]
 )
 # Configuración
-csv_path = 'Asistencia y Novedades V3 - Personal.csv'
+csv_path = 'Asistencia.csv'
 template_path = 'tarjetasEmpleados1.html'
 output_folder = './tarjetas/'
 os.makedirs(output_folder, exist_ok=True)
@@ -91,3 +91,4 @@ for _, empleado in df.iterrows():
 import cropcards
 cropcards
 print("Proceso completado!")
+
