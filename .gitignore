@@ -4,3 +4,10 @@ output_empleados/
 html2image_temp/
 tarjetas/
 resultados/
+novedades.csv
+__pycache__/
+*.pyc
+*.pyo   
+*.xlsx
+*.xlsm  
+*.csv 
