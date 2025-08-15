@@ -1,7 +1,0 @@
-Cédula,Apellidos,Nombres,Celular,Área,CentroDeCostos,Sede,CódigoQR,Estado,JefeÁrea,Supervisor,Empresa
-80088999,Esguerra,Juan Camilo,573153375981,Poscosecha,Labores 1,Soacha,https://quickchart.io/qr?text=80088999&size=200,Activo,jefedearea1@turflor.com,supervisor1@turflor.com,
-1234,Contreras,Clara,573164605708,Producción,Labores 2,Mosquera,https://quickchart.io/qr?text=1234&size=200,Activo,jefedearea2@turflor.com,Supervisor2@turflor.com,
-5678,Perez,Paulo,573153375981,Poscosecha,Labores 3,Soacha,https://quickchart.io/qr?text=5678&size=200,Activo,jefedearea1@turflor.com,supervisor1@turflor.com,
-91011,Machado,Jose,573164605708,Propagación,Labores 4,Mosquera,https://quickchart.io/qr?text=91011&size=200,Inactivo,jefedearea2@turflor.com,Supervisor2@turflor.com,
-7777,Bernal,Santiago,573153375981,Logística 1,Fumigación,Soacha,https://quickchart.io/qr?text=7777&size=200,Activo,jefedearea1@turflor.com,supervisor1@turflor.com,
-80088888,Lopez,Andres,573164605708,Logística 2,Fumigación,Mosquera,https://quickchart.io/qr?text=80088888&size=200,Activo,
