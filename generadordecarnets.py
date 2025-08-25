@@ -1,196 +1,168 @@
-import pandas as pd
-from jinja2 import Environment, FileSystemLoader
-from html2image import Html2Image
-import os
-import customtkinter as ctk
+import tkinter as tk
 from tkinter import filedialog, messagebox
-import threading
+import subprocess
+import os
+import sys
 
-# Configuración de apariencia de CustomTkinter
-ctk.set_appearance_mode("System")
-ctk.set_default_color_theme("blue")
-
-class CardGeneratorApp(ctk.CTk):
-    def __init__(self):
-        super().__init__()
+class CSVProcessorApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Generador de Tarjetas de Empleados")
+        self.root.geometry("500x300")
+        self.root.resizable(False, False)
         
-        self.title("Generador de Tarjetas de Empleados")
-        self.geometry("500x300")
+        # Centrar la ventana
+        self.center_window(500, 300)
         
-        # Variables
-        self.csv_path = ctk.StringVar()
+        # Variable para almacenar la ruta del CSV
+        self.csv_path = tk.StringVar()
         
-        # Crear widgets
-        self.create_widgets()
+        # Configurar la interfaz
+        self.setup_ui()
+    
+    def center_window(self, width, height):
+        """Centrar la ventana en la pantalla"""
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
         
-    def create_widgets(self):
+        x = (screen_width - width) // 2
+        y = (screen_height - height) // 2
+        
+        self.root.geometry(f"{width}x{height}+{x}+{y}")
+    
+    def setup_ui(self):
+        """Configurar los elementos de la interfaz"""
         # Título
-        title_label = ctk.CTkLabel(self, text="Generador de Tarjetas", font=("Arial", 20, "bold"))
-        title_label.pack(pady=20)
+        title_label = tk.Label(
+            self.root, 
+            text="Generador de Tarjetas de Empleados",
+            font=("Arial", 16, "bold"),
+            pady=10
+        )
+        title_label.pack()
         
         # Frame para selección de archivo
-        file_frame = ctk.CTkFrame(self)
-        file_frame.pack(pady=20, padx=40, fill="x")
+        file_frame = tk.Frame(self.root)
+        file_frame.pack(pady=20, padx=20, fill="x")
         
-        file_label = ctk.CTkLabel(file_frame, text="Seleccionar archivo CSV:", font=("Arial", 14))
-        file_label.pack(pady=10)
+        tk.Label(
+            file_frame, 
+            text="Archivo CSV:", 
+            font=("Arial", 10)
+        ).pack(anchor="w")
         
-        file_entry = ctk.CTkEntry(file_frame, textvariable=self.csv_path, width=300)
-        file_entry.pack(side="left", padx=10, pady=10)
+        # Entry y botón para seleccionar archivo
+        entry_frame = tk.Frame(file_frame)
+        entry_frame.pack(fill="x", pady=5)
         
-        browse_btn = ctk.CTkButton(file_frame, text="Examinar", command=self.browse_file, width=80)
-        browse_btn.pack(side="right", padx=10, pady=10)
+        tk.Entry(
+            entry_frame, 
+            textvariable=self.csv_path, 
+            font=("Arial", 10),
+            state="readonly"
+        ).pack(side="left", fill="x", expand=True, padx=(0, 10))
+        
+        tk.Button(
+            entry_frame, 
+            text="Examinar", 
+            command=self.browse_csv,
+            bg="#4CAF50",
+            fg="white",
+            font=("Arial", 10, "bold")
+        ).pack(side="right")
         
         # Frame para botones de acción
-        button_frame = ctk.CTkFrame(self)
-        button_frame.pack(pady=30)
+        button_frame = tk.Frame(self.root)
+        button_frame.pack(pady=20)
         
-        process_btn = ctk.CTkButton(button_frame, text="Procesar", command=self.process, 
-                                   font=("Arial", 14), height=40, width=120)
-        process_btn.pack(side="left", padx=20)
+        # Botón Procesar
+        tk.Button(
+            button_frame, 
+            text="Procesar", 
+            command=self.process_csv,
+            bg="#2196F3",
+            fg="white",
+            font=("Arial", 12, "bold"),
+            width=10,
+            height=2
+        ).pack(side="left", padx=10)
         
-        cancel_btn = ctk.CTkButton(button_frame, text="Cancelar", command=self.cancel, 
-                                  font=("Arial", 14), height=40, width=120, fg_color="red")
-        cancel_btn.pack(side="right", padx=20)
-        
-        # Barra de progreso
-        self.progress = ctk.CTkProgressBar(self, mode="indeterminate")
-        self.progress.pack(pady=10, padx=40, fill="x")
-        self.progress.set(0)
-        
-        # Etiqueta de estado
-        self.status_label = ctk.CTkLabel(self, text="Listo para procesar", text_color="gray")
-        self.status_label.pack(pady=10)
+        # Botón Cancelar
+        tk.Button(
+            button_frame, 
+            text="Cancelar", 
+            command=self.root.quit,
+            bg="#f44336",
+            fg="white",
+            font=("Arial", 12, "bold"),
+            width=10,
+            height=2
+        ).pack(side="right", padx=10)
     
-    def browse_file(self):
-        filename = filedialog.askopenfilename(
+    def browse_csv(self):
+        """Abrir diálogo para seleccionar archivo CSV"""
+        file_path = filedialog.askopenfilename(
             title="Seleccionar archivo CSV",
-            filetypes=[("CSV files", "*.csv"), ("All files", "*.*")]
+            filetypes=[("Archivos CSV", "*.csv"), ("Todos los archivos", "*.*")]
         )
-        if filename:
-            self.csv_path.set(filename)
+        
+        if file_path:
+            self.csv_path.set(file_path)
     
-    def process(self):
+    def process_csv(self):
+        """Ejecutar el script original con el CSV seleccionado"""
         if not self.csv_path.get():
             messagebox.showerror("Error", "Por favor, seleccione un archivo CSV")
             return
         
-        # Deshabilitar botones durante el procesamiento
-        self.disable_buttons(True)
-        self.status_label.configure(text="Procesando...")
-        self.progress.start()
-        
-        # Ejecutar en un hilo separado para no bloquear la interfaz
-        thread = threading.Thread(target=self.generate_cards)
-        thread.daemon = True
-        thread.start()
-    
-    def generate_cards(self):
         try:
-            # 1. Crear rutas absolutas y normalizadas
-            base_dir = os.path.dirname(os.path.abspath(__file__))  # Ruta del script
-            temp_dir = os.path.normpath(os.path.join(base_dir, "html2image_temp"))
-            output_dir = os.path.normpath(os.path.join(base_dir, "tarjetas"))
-
-            # 2. Crear directorios con permisos adecuados
-            os.makedirs(temp_dir, exist_ok=True, mode=0o777)
-            os.makedirs(output_dir, exist_ok=True, mode=0o777)
-
-            # 3. Configurar Html2Image con parámetros seguros
-            hti = Html2Image(
-                temp_path=temp_dir,
-                output_path=output_dir,
-                size=(328, 208),
-                custom_flags=[
-                    '--hide-scrollbars',
-                    '--default-background-color=00000000',  # Fondo transparente
-                    '--force-device-scale-factor=1',
-                    '--disable-extensions',
-                    '--disable-popup-blocking',
-                    '--disable-infobars',
-                    '--disable-notifications',
-                    '--disable-gpu',
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                    '--disable-dev-shm-usage'
-                ]
+            # Copiar el archivo CSV seleccionado al directorio actual
+            # para que el script original pueda encontrarlo como 'novedades.csv'
+            import shutil
+            shutil.copy2(self.csv_path.get(), "novedades.csv")
+            
+            # Mostrar mensaje de progreso
+            progress_window = tk.Toplevel(self.root)
+            progress_window.title("Procesando")
+            progress_window.geometry("300x100")
+            progress_window.resizable(False, False)
+            progress_window.grab_set()  # Hacer la ventana modal
+            
+            # Centrar ventana de progreso
+            progress_window.update_idletasks()
+            x = self.root.winfo_x() + (self.root.winfo_width() - 300) // 2
+            y = self.root.winfo_y() + (self.root.winfo_height() - 100) // 2
+            progress_window.geometry(f"300x100+{x}+{y}")
+            
+            tk.Label(
+                progress_window, 
+                text="Generando tarjetas...\nPor favor espere.",
+                font=("Arial", 11),
+                pady=20
+            ).pack()
+            
+            progress_window.update()
+            
+            # Ejecutar el script original
+            result = subprocess.run(
+                [sys.executable, "cardgenerator.py"],
+                capture_output=True,
+                text=True,
+                cwd=os.getcwd()
             )
             
-            # Configuración
-            csv_path = self.csv_path.get()
-            template_path = 'tarjetasEmpleados1.html'
-            output_folder = './tarjetas/'
-            os.makedirs(output_folder, exist_ok=True)
-
-            # Cargar datos
-            df = pd.read_csv(csv_path)
-            # Verificar que el archivo CSV se cargó correctamente
-            df.columns = df.columns.str.strip()  # Eliminar espacios en blanco de los nombres de las columnas
+            # Cerrar ventana de progreso
+            progress_window.destroy()
             
-            # Configurar Jinja2
-            env = Environment(loader=FileSystemLoader('.'))
-            template = env.get_template(template_path)
-
-            # Función para generar imagen
-            def generar_imagen_segura(hti, html_content, output_filename):
-                try:
-                    # Asegurar nombre de archivo válido
-                    safe_filename = "".join(c for c in output_filename if c.isalnum() or c in ('_', '-', '.'))
-                    
-                    # Generar usando directorio temporal controlado
-                    hti.screenshot(
-                        html_str=html_content,
-                        save_as=safe_filename,
-                        size=(328, 308),    
-                    )
-                    return True
-                except Exception as e:
-                    print(f"Error al generar {output_filename}: {str(e)}")
-                    return False
-            
-            # Procesar cada empleado y generar imágenes
-            for _, empleado in df.iterrows():
-                html_output = template.render(**empleado.to_dict())
-                output_image = f"{empleado['Cedula']}{empleado['Apellidos']}{empleado['Nombres']}.png"
+            if result.returncode == 0:
+                messagebox.showinfo("Éxito", "Las tarjetas se han generado correctamente.")
+            else:
+                messagebox.showerror("Error", f"Ocurrió un error al procesar el archivo:\n\n{result.stderr}")
                 
-                if generar_imagen_segura(hti, html_output, output_image):
-                    print(f"✓ Imagen generada: {output_image}")
-                else:
-                    print(f"✗ Falló generación para empleado {empleado['Cedula']}")
-            
-            # Finalizar
-            try:
-                import cropcards
-                cropcards
-            except ImportError:
-                print("Módulo cropcards no encontrado, continuando sin él")
-            
-            # Actualizar interfaz en el hilo principal
-            self.after(0, self.process_completed)
-            
         except Exception as e:
-            # Mostrar error en el hilo principal
-            self.after(0, lambda: self.process_error(str(e)))
-    
-    def process_completed(self):
-        self.progress.stop()
-        self.status_label.configure(text="Proceso completado con éxito!")
-        self.disable_buttons(False)
-        messagebox.showinfo("Éxito", "Las tarjetas se han generado correctamente")
-    
-    def process_error(self, error_msg):
-        self.progress.stop()
-        self.status_label.configure(text="Error en el procesamiento")
-        self.disable_buttons(False)
-        messagebox.showerror("Error", f"Ocurrió un error:\n{error_msg}")
-    
-    def disable_buttons(self, disable):
-        # Esta función necesitaría acceso a los botones, que podrías almacenar como atributos
-        pass  # Implementar según sea necesario
-    
-    def cancel(self):
-        self.quit()
+            messagebox.showerror("Error", f"Ocurrió un error inesperado:\n\n{str(e)}")
 
 if __name__ == "__main__":
-    app = CardGeneratorApp()
-    app.mainloop()
+    root = tk.Tk()
+    app = CSVProcessorApp(root)
+    root.mainloop()

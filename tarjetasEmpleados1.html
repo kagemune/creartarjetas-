@@ -32,7 +32,7 @@ body {
      color: black;
      padding: 5px;
      text-align: center;
-     margin-bottom: 10px;
+     margin-bottom: 0px;
  }
  .contenido {
      display: flex;
@@ -74,13 +74,14 @@ body {
 <body>
     <div class="tarjeta-empleado">
         <div class="header">
-            <h3>{{Apellidos}} {{Nombres}} </h3>
-            <h4>    {{Cedula}}</h4>
+            <h3>{{Apellidos}} </h3>
+            <h3>{{Nombres}} </h3>
+            <h4> {{Cédula}}</h4>
             <!-- <h2>{{Área}} {{CentroDeCostos}}</h2> -->
         </div>
         <div class="contenido">
             <div class="foto">
-                <img src="{{CodigoQR}}" alt="Foto de {{Nombres}}">
+                <img src="{{CódigoQR}}" alt="Foto de {{Nombres}}">
             </div>
         </div>
     </div>
