@@ -1,5 +1,7 @@
 /venv/
 venv/
+build/
+dist/
 output_empleados/
 html2image_temp/
 tarjetas/
@@ -11,3 +13,4 @@ __pycache__/
 *.xlsx
 *.xlsm  
 *.csv 
+Asistencia y Novedades V3 - Personal.csv
