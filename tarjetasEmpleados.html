@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
+    <style>
+        /* Estilos para la tarjeta de empleado */
+* {
+     margin: 0;
+     padding: 0;
+ }
+body {
+     font-family: roboto, sans-serif;
+     margin: 2px;
+ }
+ .tarjeta-empleado {
+    width: 408px;
+    height: 204px;
+     border: 1px solid #333;
+     border-radius: 10px;
+     padding: 8px;
+     margin: 2px ;
+     /* font-family: Arial, sans-serif; */
+    background-color: #f1f1f1ec; 
+     box-sizing: border-box;
+     
+ }
+ .header {
+     /*background-color: #8933a1e8;*/
+     color: black;
+     padding: 3px;
+     text-align: center;
+     margin-bottom: 1px;
+ }
+ .section{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-around;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+
+}
+ .aside{
+    float: left;
+    width: 150px;
+    height: 110px;
+    margin-right: 5px;
+    text-align: left;
+    padding-left: 10px;
+    padding-top: 10px;
+    justify-content: center;
+    align-items: center;
+ }
+ .foto {
+     width: 112px;
+     height: 112px;
+     /* margin-bottom: 20px;*/
+     border: 1px solid #ddd;
+     background-color: #fff;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     border-radius: 5px;
+ }
+ .foto img {
+     max-width: 100%;
+     max-height: 100%;
+ }
+ /* .info {
+     flex: 1;
+ }
+ .footer {
+     margin-top: 20px;
+     text-align: center;
+     font-size: 12px;
+     color: #666;
+ } */
+
+    </style>
+
+    <!-- <title>tarjetasEmpleados</title> -->
+</head>
+
+<body>
+    <div class="tarjeta-empleado">
+        <div class="header">
+            <h3>{{Apellidos}} </h3>
+            <h3>{{Nombres}} </h3>
+            <h4> {{Cedula}}</h4>
+            <!-- <h2>{{Área}} {{CentroDeCostos}}</h2> -->
+        </div>
+        <div class="section">
+            <div class="aside">
+                <h4>
+                    RH: {{RH}} <br>
+                    Locker: {{Locker}} <br>
+                </h4>
+            </div>
+          
+            <div class="foto">
+                <img src="{{CodigoQR}}" alt="Foto de {{Nombres}}">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
