@@ -1,18 +1,15 @@
 import PyInstaller.__main__
 import os
 
-# Obtener la ruta actual
-current_dir = os.path.dirname(os.path.abspath(__file__))
-
+# Crear el ejecutable
 PyInstaller.__main__.run([
-    'generadorcarnets.py',
+    'main.py',
     '--name=GeneradorDeTarjetas',
     '--onefile',
     '--windowed',
-    '--add-data=templates;templates',
-    '--add-data=assets;assets',
     '--add-data=tarjetasEmpleados1.html;.',
+    '--hidden-import=win32com',  # ← Añade esta línea
+    '--hidden-import=win32api',  # ← Y esta
     # '--icon=assets/icono.ico',
-    '--clean',
-    '--noconfirm'
+    '--clean'
 ])

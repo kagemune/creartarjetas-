@@ -3,21 +3,24 @@ from tkinter import filedialog, messagebox
 import subprocess
 import os
 import sys
-import threading
+
+
+# if sys.stdout.encoding != 'utf-8':
+#     sys.stdout.reconfigure(encoding='utf-8')
+
 
 class CSVProcessorApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Generador de Tarjetas de Empleados")
-        self.root.geometry("500x250")
+        self.root.geometry("500x300")
         self.root.resizable(False, False)
         
         # Centrar la ventana
-        self.center_window(500, 250)
+        self.center_window(500, 300)
         
         # Variable para almacenar la ruta del CSV
         self.csv_path = tk.StringVar()
-        self.processing = False
         
         # Configurar la interfaz
         self.setup_ui()
@@ -61,8 +64,7 @@ class CSVProcessorApp:
             entry_frame, 
             textvariable=self.csv_path, 
             font=("Arial", 10),
-            state="readonly",
-            width=40
+            state="readonly"
         ).pack(side="left", fill="x", expand=True, padx=(0, 10))
         
         tk.Button(
@@ -74,21 +76,12 @@ class CSVProcessorApp:
             font=("Arial", 10, "bold")
         ).pack(side="right")
         
-        # Etiqueta de estado
-        self.status_label = tk.Label(
-            self.root, 
-            text="Listo para procesar",
-            font=("Arial", 10),
-            fg="gray"
-        )
-        self.status_label.pack(pady=5)
-        
         # Frame para botones de acción
         button_frame = tk.Frame(self.root)
         button_frame.pack(pady=20)
         
         # Botón Procesar
-        self.process_btn = tk.Button(
+        tk.Button(
             button_frame, 
             text="Procesar", 
             command=self.process_csv,
@@ -96,12 +89,11 @@ class CSVProcessorApp:
             fg="white",
             font=("Arial", 12, "bold"),
             width=10,
-            height=1
-        )
-        self.process_btn.pack(side="left", padx=10)
+            height=2
+        ).pack(side="left", padx=10)
         
         # Botón Cancelar
-        self.cancel_btn = tk.Button(
+        tk.Button(
             button_frame, 
             text="Cancelar", 
             command=self.root.quit,
@@ -109,15 +101,11 @@ class CSVProcessorApp:
             fg="white",
             font=("Arial", 12, "bold"),
             width=10,
-            height=1
-        )
-        self.cancel_btn.pack(side="right", padx=10)
+            height=2
+        ).pack(side="right", padx=10)
     
     def browse_csv(self):
         """Abrir diálogo para seleccionar archivo CSV"""
-        if self.processing:
-            return
-            
         file_path = filedialog.askopenfilename(
             title="Seleccionar archivo CSV",
             filetypes=[("Archivos CSV", "*.csv"), ("Todos los archivos", "*.*")]
@@ -128,33 +116,37 @@ class CSVProcessorApp:
     
     def process_csv(self):
         """Ejecutar el script original con el CSV seleccionado"""
-        if self.processing:
-            return
-            
         if not self.csv_path.get():
             messagebox.showerror("Error", "Por favor, seleccione un archivo CSV")
             return
         
-        # Cambiar estado a procesando
-        self.processing = True
-        self.status_label.config(text="Procesando...", fg="blue")
-        self.process_btn.config(state="disabled")
-        self.cancel_btn.config(state="disabled")
-        
-        # Ejecutar en un hilo separado
-        thread = threading.Thread(target=self.run_script)
-        thread.daemon = True
-        thread.start()
-        
-        # Verificar cuando termine el hilo
-        self.check_thread(thread)
-    
-    def run_script(self):
-        """Ejecutar el script en un hilo separado"""
         try:
             # Copiar el archivo CSV seleccionado al directorio actual
+            # para que el script original pueda encontrarlo como 'novedades.csv'
             import shutil
             shutil.copy2(self.csv_path.get(), "novedades.csv")
+            
+            # Mostrar mensaje de progreso
+            progress_window = tk.Toplevel(self.root)
+            progress_window.title("Procesando")
+            progress_window.geometry("300x100")
+            progress_window.resizable(False, False)
+            progress_window.grab_set()  # Hacer la ventana modal
+            
+            # Centrar ventana de progreso
+            progress_window.update_idletasks()
+            x = self.root.winfo_x() + (self.root.winfo_width() - 300) // 2
+            y = self.root.winfo_y() + (self.root.winfo_height() - 100) // 2
+            progress_window.geometry(f"300x100+{x}+{y}")
+            
+            tk.Label(
+                progress_window, 
+                text="Generando tarjetas...\nPor favor espere.",
+                font=("Arial", 11),
+                pady=20
+            ).pack()
+            
+            progress_window.update()
             
             # Ejecutar el script original
             result = subprocess.run(
@@ -164,35 +156,16 @@ class CSVProcessorApp:
                 cwd=os.getcwd()
             )
             
-            # Guardar resultado
-            self.result = result
+            # Cerrar ventana de progreso
+            progress_window.destroy()
             
-        except Exception as e:
-            self.result = type('obj', (object,), {
-                'returncode': 1,
-                'stderr': f"Error al ejecutar el script: {str(e)}"
-            })
-    
-    def check_thread(self, thread):
-        """Verificar si el hilo ha terminado"""
-        if thread.is_alive():
-            # Revisar de nuevo en 100ms
-            self.root.after(100, lambda: self.check_thread(thread))
-        else:
-            # El hilo terminó, procesar resultado
-            self.processing = False
-            self.process_btn.config(state="normal")
-            self.cancel_btn.config(state="normal")
-            
-            if self.result.returncode == 0:
-                self.status_label.config(text="Proceso completado con éxito", fg="green")
+            if result.returncode == 0:
                 messagebox.showinfo("Éxito", "Las tarjetas se han generado correctamente.")
             else:
-                self.status_label.config(text="Error en el procesamiento", fg="red")
-                # Mostrar solo las últimas líneas del error para no abrumar al usuario
-                error_lines = self.result.stderr.strip().split('\n')
-                short_error = '\n'.join(error_lines[-5:]) if len(error_lines) > 5 else self.result.stderr
-                messagebox.showerror("Error", f"Ocurrió un error al procesar el archivo:\n\n{short_error}")
+                messagebox.showerror("Error", f"Ocurrió un error al procesar el archivo:\n\n{result.stderr}")
+                
+        except Exception as e:
+            messagebox.showerror("Error", f"Ocurrió un error inesperado:\n\n{str(e)}")
 
 if __name__ == "__main__":
     root = tk.Tk()
