@@ -7,7 +7,7 @@ PyInstaller.__main__.run([
     '--name=GeneradorDeTarjetas',
     '--onefile',
     '--windowed',
-    '--add-data=tarjetasEmpleados1.html;.',
+    '--add-data=tarjetasEmpleados.html;.',
     '--hidden-import=win32com',  # ← Añade esta línea
     '--hidden-import=win32api',  # ← Y esta
     # '--icon=assets/icono.ico',

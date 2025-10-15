@@ -1,6 +1,8 @@
 /venv/
 venv/
+.vscode/
 build/
+assets/
 dist/
 output_empleados/
 html2image_temp/

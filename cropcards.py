@@ -16,7 +16,7 @@ def procesar_imagen(ruta_entrada, ruta_salida):
         with Image.open(entrada) as img:
             img_gris = img.convert('L')  # Convertir a escala de grises
             img_gris.save(salida)
-            area = (2, 2, 326, 206)  # Ajusta estos valores
+            area = (3, 1, 208, 412)  # Ajusta estos valores
             cropped_img = img_gris.crop(area)
             cropped_img.save(salida)
             # Imprimir mensaje de éxito
