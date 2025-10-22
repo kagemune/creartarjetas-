@@ -150,7 +150,7 @@ class CSVProcessorApp:
             
             # Ejecutar el script original
             result = subprocess.run(
-                [sys.executable, "cardgenerator.py"],
+                [sys.executable, "cardgenerator copy.py"],
                 capture_output=True,
                 text=True,
                 cwd=os.getcwd()

@@ -21,7 +21,7 @@ os.makedirs(output_dir, exist_ok=True, mode=0o777)
 hti = Html2Image(
     temp_path=temp_dir,
     output_path=output_dir,
-    size=(412, 208),
+    size=(340, 700),
     custom_flags=[
         '--hide-scrollbars',
         '--default-background-color=00000000',  # Fondo transparente
@@ -35,11 +35,11 @@ hti = Html2Image(
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage'
-     ]
+    ]
 )
 # Configuración
 csv_path = 'novedades.csv'
-template_path = 'tarjetasEmpleados.html'
+template_path = 'tarjetasEmpleados1.html'
 output_folder = './tarjetas/'
 os.makedirs(output_folder, exist_ok=True)
 
@@ -67,8 +67,8 @@ def generar_imagen_segura(hti, html_content, output_filename):
 
             html_str=html_content,
             save_as=safe_filename,
-            size=(412, 308),    
-           
+            size=(340, 700),    
+
         )
 
         return True
@@ -80,7 +80,7 @@ def generar_imagen_segura(hti, html_content, output_filename):
 # Procesar cada empleado y generar imágenes
 for _, empleado in df.iterrows():
     html_output = template.render(**empleado.to_dict())
-    output_image = f"{empleado['Cedula']}{empleado['Apellidos']}{empleado['Nombres']}.png"
+    output_image = f"{empleado['Cédula']}{empleado['Apellidos']}{empleado['Nombres']}.png"
     
     if generar_imagen_segura(hti, html_output, output_image):
         print(f"Imagen generada: {output_image}")
