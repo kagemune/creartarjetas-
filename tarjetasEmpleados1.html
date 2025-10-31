@@ -154,7 +154,7 @@
         <img src="C:\Users\juan.mosquera\Videos\cardGenerator\Artboard-1.png" alt="Logo_turflor" class="logo">
     </div>
     <div class="foto-container">
-        <img src="" alt="Katia Fonseca Fonseca" class="foto">
+        <img src="{{url}}" alt="{{apellidos}} {{Nombres}}" class="foto">
     </div>
     <div class="datos">
         <h2 class="nombre">{{Apellidos}} {{Nombres}}</h2>
@@ -162,8 +162,13 @@
         <p class="rh">CC. {{Cédula}}</p>
         <p class="rh">RH {{RH}}</p>
         <p class="rh">Locker {{Locker}}</p>
-        <p class="rh">parqueadero  {{Parqueadero}}</p>
-        <img id="QR" src= "{{QR}}" alt="">
+        <p class="rh">P: {{Parqueadero}}</p>
+        {% if Empresa != "Turflor" %}
+        <p class="rh">{{Empresa}}</p>
+        {% else %}
+        <hr>
+        {% endif %}
+        <img id="QR" src="{{CódigoQR}}" alt="QR de {{Cédula}}">
     </div>
     <div class="pie-pagina">
         <p>Carnet Ingreso Turflor 2025</p>
