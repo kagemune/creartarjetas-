@@ -14,11 +14,11 @@ def procesar_imagen(ruta_entrada, ruta_salida):
         
         # Procesar imagen
         with Image.open(entrada) as img:
-            img_rgb = img.convert('RGB')  # Convertir a escala de grises
-            img_rgb.save(salida)
+            img_rgb = img.convert('RGB')  # mantener a color 
+            img_rgb.save(salida, quality=95)  # Guardar con calidad 95
             area = (26, 18, 330, 597)  # Ajusta estos valores
             cropped_img = img_rgb.crop(area)
-            cropped_img.save(salida)
+            cropped_img.save(salida, quality=95)
             # Imprimir mensaje de éxito
             
         print(f"Imagen procesada y guardada en: {salida}")
