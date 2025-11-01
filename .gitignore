@@ -1,6 +1,7 @@
 /venv/
 .venv/
 .vscode/
+vscode/ 
 assets/
 venv/
 build/
