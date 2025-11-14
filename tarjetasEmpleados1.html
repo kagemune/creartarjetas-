@@ -91,6 +91,9 @@
     color: #333;
     z-index: 5;
     position: relative;
+    height: 200px;
+    box-sizing: border-box;
+
 }
 
 .nombre {
@@ -160,7 +163,7 @@
         <h2 class="nombre">{{Apellidos}} {{Nombres}}</h2>
         <!-- <p class="cargo">DIRECCION OPERACIONES Y CALIDAD</p> -->
         <p class="rh">CC. {{Cédula}}</p>
-        <p class="rh">RH {{RH}}</p>
+        <!-- <p class="rh">RH {{RH}}</p> -->
         <p class="rh">Locker {{Locker}}</p>
         <p class="rh">P: {{Parqueadero}}</p>
         {% if Empresa != "Turflor" %}
@@ -168,8 +171,8 @@
         {% else %}
         <hr>
         {% endif %}
-        <img id="QR" src="{{CódigoQR}}" alt="QR de {{Cédula}}">
     </div>
+    <img id="QR" src="{{CódigoQR}}" alt="QR de {{Cédula}}">
     <div class="pie-pagina">
         <p>Carnet Ingreso Turflor 2025</p>
     </div>

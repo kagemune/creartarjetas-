@@ -21,7 +21,7 @@ os.makedirs(output_dir, exist_ok=True, mode=0o777)
 hti = Html2Image(
     temp_path=temp_dir,
     output_path=output_dir,
-    size=(328, 208),
+    size=(208, 410),
     custom_flags=[
         '--hide-scrollbars',
         '--default-background-color=00000000',  # Fondo transparente
@@ -35,7 +35,7 @@ hti = Html2Image(
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage'
-     ]
+    ]
 )
 # Configuración
 csv_path = 'novedades.csv'
@@ -67,7 +67,7 @@ def generar_imagen_segura(hti, html_content, output_filename):
 
             html_str=html_content,
             save_as=safe_filename,
-            size=(210, 510),    
+            size=(412, 408),    
         )
 
         return True
@@ -79,12 +79,12 @@ def generar_imagen_segura(hti, html_content, output_filename):
 # Procesar cada empleado y generar imágenes
 for _, empleado in df.iterrows():
     html_output = template.render(**empleado.to_dict())
-    output_image = f"{empleado['Cédula']}{empleado['Apellidos']}{empleado['Nombres']}.png"
+    output_image = f"{empleado['cedula']}{empleado['nombre']}.png"
     
     if generar_imagen_segura(hti, html_output, output_image):
         print(f"Imagen generada: {output_image}")
     else:
-        print(f"Falló generación para empleado {empleado['Cédula']}")
+        print(f"Falló generación para empleado {empleado['Cedula']}")
 
 # Finalizar
 import cropcards
