@@ -4,7 +4,7 @@ import os
 # Crear el ejecutable
 PyInstaller.__main__.run([
     'main2.py',
-    '--name=GeneradorDeTarjetas2',
+    '--name=GeneradorDeCarnets2',
     '--onefile',
     '--windowed',
     '--add-data=tarjetasEmpleados1.html;.',

@@ -39,6 +39,7 @@ hti = Html2Image(
 )
 # Configuración
 csv_path = 'novedades.csv'
+# template_path = 'tarjetasEmpleados1.html'
 template_path = 'tarjetasEmpleados1.html'
 output_folder = './tarjetas/'
 os.makedirs(output_folder, exist_ok=True)
