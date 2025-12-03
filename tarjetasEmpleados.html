@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
+    <style>
+        /* Estilos para la tarjeta de empleado */
+/* Estilos generales para el contenedor del carnet */
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1px;
+    width: 305px;
+    height: 1020px;
+
+}
+.carnet {
+    width: 300px; /* Ancho típico para un carnet en pantalla */
+    height: 500px; /* Alto ajustado al diseño */
+    margin: 20px;
+    background-color: #fff;
+    border-radius: 15px; /* Bordes redondeados sutiles */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* Importante para las franjas */
+    position: relative; /* Para posicionar elementos internos */
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding-top: 50px; /* Espacio para la franja superior */
+    padding-bottom: 25px; /* Espacio para el pie de página */
+}
+
+/* Franja superior y diseño de borde curvo (rojo y negro) */
+.franja-superior {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px; /* Altura de la sección de diseño superior */
+    background-color: #a400e5; /* fucsia principal */
+    clip-path: polygon(0 0, 100% 0, 100% 70px, 0 100%); /* Forma de la franja roja */
+}
+
+.franja-superior::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background-color: #000; /* Negro para la línea de contraste */
+    clip-path: polygon(0 0, 100% 0, 100% 60px, 0 90%); /* Forma de la franja negra (ligeramente más pequeña) */
+    opacity: 0.2; /* Para que parezca una sombra o un borde */
+}
+
+/* Logo de la empresa */
+.logo-container {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 10; /* Asegura que esté sobre la franja */
+}
+#QR{
+    width: 120px;
+    height: 120px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.logo {
+    width: 80px; /* Tamaño aproximado del logo */
+    height: auto;
+}
+
+/* Contenedor de la foto (círculo) */
+.foto-container {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 20px; /* Centrado y margen inferior */
+    border-radius: 50%;
+    overflow: hidden;
+    /* Borde verde alrededor de la foto */
+    border: 4px solid #e4b313; /* Verde similar al del logo */
+    box-shadow: 0 0 0 2px #fff; /* Pequeño borde blanco para separar del verde */
+    z-index: 2; /* Para que esté por encima de las franjas de diseño */
+    background-color: #fff; /* Fondo blanco */
+}
+
+.foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra el círculo */
+}
+
+/* Datos personales y de cargo */
+.datos {
+    padding: 0 15px;
+    color: #333;
+    z-index: 5;
+    position: relative;
+    height: 200px;
+    box-sizing: border-box;
+
+}
+
+.nombre {
+    font-size: 1.5em;
+    font-weight: 800; /* Extra bold */
+    line-height: 1.1;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.cargo {
+    font-size: 1.2em;
+    font-weight: 600; /* Semi bold */
+    line-height: 1.2;
+    margin-bottom: 25px;
+    color: #000;
+}
+
+.cc, .rh {
+    font-size: 1em;
+    margin: 5px 0;
+    font-weight: normal;
+}
+
+.rh {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Línea de acceso especial */
+.acceso {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #ccc; /* Separador visual */
+    text-transform: uppercase;
+}
+
+/* Pie de página con información de documento */
+.pie-pagina {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #a400e5; /* fucsia */
+    color: #fff;
+    font-size: 0.65em;
+    padding: 5px 0;
+    font-weight: 300;
+}
+.reverse {
+    width: 300px;
+    height: 500px; /* Ancho típico para un carnet en pantalla */
+    background-color: #e9e9e9;
+    border-radius: 10px;
+}
+.reverse img{
+        width: 300px;
+        height: 500px;
+        transform: scaley(-1);
+    }
+    </style>
+
+    <!-- <title>tarjetasEmpleados</title> -->
+</head>
+
+<body>
+    <main>
+
+        <div class="carnet">
+            <div class="franja-superior"></div>
+            <div class="logo-container">
+                <img src="C:\Users\juan.mosquera\Videos\cardGenerator\Artboard-yellow.png" alt="Logo_turflor" class="logo">
+            </div>
+            <div class="foto-container">
+                <img src="{{url}}" alt="{{apellidos}} {{Nombres}}" class="foto">
+            </div>
+            <div class="datos">
+                <h2 class="nombre">{{Apellidos}} {{Nombres}}</h2>
+                <!-- <p class="cargo">DIRECCION OPERACIONES Y CALIDAD</p> -->
+                <p class="rh">CC. {{Cédula}}</p>
+                <!-- <p class="rh">RH {{RH}}</p> -->
+                <p class="rh">Locker {{Locker}}</p>
+                <p class="rh">P: {{Parqueadero}}</p>
+                {% if Empresa != "Turflor" %}
+                <p class="rh">{{Empresa}}</p>
+                {% else %}
+                <hr>
+                {% endif %}
+            </div>
+            <img id="QR" src="{{CódigoQR}}" alt="QR de {{Cédula}}">
+            <div class="pie-pagina">
+                <p>Carnet Ingreso Turflor 2025</p>
+            </div>
+        </div>
+        <div class="reverse">
+            <img src="C:\Users\juan.mosquera\Videos\cardGenerator\reverso.png" alt="reverso" style="width:300px; height:500px;">
+        </div>
+    </main>
+    </body>
+    
+</html>

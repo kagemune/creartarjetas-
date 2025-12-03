@@ -21,7 +21,7 @@ os.makedirs(output_dir, exist_ok=True, mode=0o777)
 hti = Html2Image(
     temp_path=temp_dir,
     output_path=output_dir,
-    size=(340, 700),
+    size=(340, 1220),
     custom_flags=[
         '--hide-scrollbars',
         '--default-background-color=00000000',  # Fondo transparente
@@ -40,7 +40,7 @@ hti = Html2Image(
 # Configuración
 csv_path = 'novedades.csv'
 # template_path = 'tarjetasEmpleados1.html'
-template_path = 'tarjetasEmpleados1.html'
+template_path = 'tarjetasEmpleados.html'
 output_folder = './tarjetas/'
 os.makedirs(output_folder, exist_ok=True)
 
@@ -68,7 +68,7 @@ def generar_imagen_segura(hti, html_content, output_filename):
 
             html_str=html_content,
             save_as=safe_filename,
-            size=(340, 700),    
+            size=(340, 1220),    
 
         )
 

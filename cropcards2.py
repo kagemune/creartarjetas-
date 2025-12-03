@@ -16,7 +16,7 @@ def procesar_imagen(ruta_entrada, ruta_salida):
         with Image.open(entrada) as img:
             img_rgb = img.convert('RGB')  # mantener a color 
             img_rgb.save(salida, quality=95)  # Guardar con calidad 95
-            area = (26, 18, 330, 596)  # Ajusta estos valores
+            area = (5, 20, 318, 1032)  # Ajusta estos valores
             cropped_img = img_rgb.crop(area)
             cropped_img.save(salida, quality=95)
             # Imprimir mensaje de éxito
