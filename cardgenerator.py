@@ -39,7 +39,7 @@ hti = Html2Image(
 )
 # Configuración
 csv_path = 'novedades.csv'
-template_path = 'tarjetasEmpleados.html'
+template_path = 'tarjetasprovisional.html'
 output_folder = './tarjetas/'
 os.makedirs(output_folder, exist_ok=True)
 
@@ -79,12 +79,12 @@ def generar_imagen_segura(hti, html_content, output_filename):
 # Procesar cada empleado y generar imágenes
 for _, empleado in df.iterrows():
     html_output = template.render(**empleado.to_dict())
-    output_image = f"{empleado['cedula']}{empleado['nombre']}.png"
+    output_image = f"{empleado['Cédula']}{empleado['Nombres']}.png"
     
     if generar_imagen_segura(hti, html_output, output_image):
         print(f"Imagen generada: {output_image}")
     else:
-        print(f"Falló generación para empleado {empleado['Cedula']}")
+        print(f"Falló generación para empleado {empleado['Cédula']}")
 
 # Finalizar
 import cropcards
