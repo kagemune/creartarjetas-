@@ -40,7 +40,7 @@ class CSVProcessorApp:
         # Título
         title_label = tk.Label(
             self.root, 
-            text="Generador de Tarjetas de Empleados",
+            text="Generador de Tarjetas de Contratistas",
             font=("Arial", 16, "bold"),
             pady=10
         )
@@ -150,7 +150,7 @@ class CSVProcessorApp:
             
             # Ejecutar el script original
             result = subprocess.run(
-                [sys.executable, "cardgenerator copy.py"],
+                [sys.executable, "cardgenerator contratistas.py"],
                 capture_output=True,
                 text=True,
                 cwd=os.getcwd()
