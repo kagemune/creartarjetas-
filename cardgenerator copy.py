@@ -68,7 +68,7 @@ def generar_imagen_segura(hti, html_content, output_filename):
 
             html_str=html_content,
             save_as=safe_filename,
-            size=(340, 1220),    
+            size=(340, 1300),    
 
         )
 

@@ -42,7 +42,7 @@ main{
     left: 0;
     width: 100%;
     height: 120px; /* Altura de la sección de diseño superior */
-    background-color: #a400e5; /* fucsia principal */
+    background-color: #00e500; /* fucsia principal */
     clip-path: polygon(0 0, 100% 0, 100% 70px, 0 100%); /* Forma de la franja roja */
 }
 
@@ -86,7 +86,7 @@ main{
     border-radius: 50%;
     overflow: hidden;
     /* Borde verde alrededor de la foto */
-    border: 4px solid #e4b313; /* Verde similar al del logo */
+    border: 4px solid #e50000; /* Verde similar al del logo */
     box-shadow: 0 0 0 2px #fff; /* Pequeño borde blanco para separar del verde */
     z-index: 2; /* Para que esté por encima de las franjas de diseño */
     background-color: #fff; /* Fondo blanco */
@@ -152,7 +152,7 @@ main{
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #a400e5; /* fucsia */
+    background-color: #00e500; /* fucsia */
     color: #fff;
     font-size: 0.65em;
     padding: 5px 0;
@@ -179,7 +179,7 @@ main{
         <div class="carnet">
             <div class="franja-superior"></div>
             <div class="logo-container">
-                <img src="C:\Users\juan.mosquera\Videos\cardGenerator\Artboard-yellow.png" alt="Logo_turflor" class="logo">
+                <img src="C:\Users\juan.mosquera\Videos\cardGenerator\Artboard-red.png" alt="Logo_turflor" class="logo">
             </div>
             <div class="foto-container">
                 <img src="{{url}}" alt="{{apellidos}} {{Nombres}}" class="foto">
@@ -189,8 +189,13 @@ main{
                 <!-- <p class="cargo">DIRECCION OPERACIONES Y CALIDAD</p> -->
                 <p class="rh">CC. {{Cédula}}</p>
                 <p class="rh">RH {{RH}}</p>
-                <p class="rh">Locker {{Locker}}</p>
-                <p class="rh">P: {{Parqueadero}}</p>
+                {% if Locker and Locker|trim %}
+                <p class="rh">{{Locker}}</p>
+                {% endif %}
+                            
+                {% if Parqueadero and Parqueadero|trim %}
+                <p class="rh">{{Parqueadero}}</p>
+                {% endif %}
                 {% if Empresa != "Turflor" %}
                 <p class="rh">{{Empresa}}</p>
                 {% else %}
@@ -199,7 +204,7 @@ main{
             </div>
             <img id="QR" src="{{CódigoQR}}" alt="QR de {{Cédula}}">
             <div class="pie-pagina">
-                <p>Carnet Ingreso Turflor 2025</p>
+                <p>REPORTE CUALQUIER ANOMALÍA AL PERSONAL DE SEGURIDAD</p>
             </div>
         </div>
         <div class="reverse">
